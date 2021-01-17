@@ -24,7 +24,7 @@ Feature: Subscription
 
   Scenario: Show information screen when user input with valid and not existed email
       Given Testmaster page is showed
-       When The user input in email textbox with "abcd4321"
+       When The user input in email textbox with "abcd4321@gmail.com"
        Then information screen will be showed with title: "Để phục vụ bạn được tốt hơn, bạn vui lòng cung cấp thêm các thông tin bên dưới.", Giới tính: "Không xác định", Loại tin muốn nhận: "Nhận tất cả các loại tin"
 
 # Background: User must to input valid email

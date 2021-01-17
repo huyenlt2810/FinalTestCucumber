@@ -1,9 +1,14 @@
 package POM;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class SubscriptionPage {
     @FindBy (css = "input[type=\"email\"]")
@@ -25,7 +30,35 @@ public class SubscriptionPage {
     @FindBy (css = "button[id=\"cancel-button\"]")
     public WebElement btnCancel;
 
+    @FindBy (xpath = "//span[text()=\"* Email không đúng định dạng\"]")
+    public  WebElement errorEmailMsg;
+    public String colorMsgExpect = "rgba(255, 0, 0, 1)";
+    public String colorBoderExpected = "rgb(255, 0, 0)";
+
+    @FindBy (css = "div.body-message")
+    public WebElement existedEmailErr;
+    @FindBy (css = "div.popover-body b")
+    public WebElement inforPopup;
+
+    WebDriver driver;
     public SubscriptionPage (WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void open () {
+        this.driver.get("http://testmaster.vn/");
+        this.driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         PageFactory.initElements(driver, this);
+    }
+    public void reInnitElement () {
+        PageFactory.initElements(driver, this);
+    }
+    public void waitEmaiErr () {
+        WebDriverWait waitEmailErr = new WebDriverWait(this.driver, 10);
+        waitEmailErr.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.body-message")));
+    }
+    public void waitInforPopup () {
+        WebDriverWait waitInforPopup = new WebDriverWait(this.driver, 10);
+        waitInforPopup.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div.popover-body b")));
     }
 }
